@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "HabitGarden", "HabitGarden.pyproj", "{62F196C9-C0CF-46DD-8E2C-E02188CFDDF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62F196C9-C0CF-46DD-8E2C-E02188CFDDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62F196C9-C0CF-46DD-8E2C-E02188CFDDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2EDD0698-B1FB-4801-BE79-02BA25F3DFB4}
+	EndGlobalSection
+EndGlobal
