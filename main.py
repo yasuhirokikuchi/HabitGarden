@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (QApplication,
 import os
 import sys
 
+
 # PySide6のアプリ本体（ユーザがコーディングしていく部分）
 class MainWindow(QWidget):
     def __init__(self, parent=None):
