@@ -6,6 +6,7 @@ import os
 import sys
 
 # あああああああああああああああああああ
+
 # PySide6のアプリ本体（ユーザがコーディングしていく部分）
 class MainWindow(QWidget):
     def __init__(self, parent=None):
