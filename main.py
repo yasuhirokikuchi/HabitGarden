@@ -1,37 +1,4 @@
-import PySide6
-from PySide6.QtWidgets import (QApplication,
-                               QLabel,          # ƒ‰ƒxƒ‹‚ğg‚¤‚Ì‚É•K—v
-                               QWidget)
-import os
-import sys
-# PySide6‚ÌƒAƒvƒŠ–{‘Ìiƒ†[ƒU‚ªƒR[ƒfƒBƒ“ƒO‚µ‚Ä‚¢‚­•”•ªj
-class MainWindow(QWidget):
-    def __init__(self, parent=None):
-        # eƒNƒ‰ƒX‚Ì‰Šú‰»
-        super().__init__(parent)
-        
-        # ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹
-        self.setWindowTitle("PySide6‚Åì‚Á‚½ƒAƒvƒŠ‚Å‚·B")
-        
-        # ƒ‰ƒxƒ‹‚ğ•\¦‚·‚éƒƒ\ƒbƒh
-        self.SetLabel()
-        
-    # ƒ‰ƒxƒ‹‚Í•Ê‚Ìƒƒ\ƒbƒh‚É•ª‚¯‚Ü‚µ‚½
-    def SetLabel(self):
-        # ƒ‰ƒxƒ‹‚ğg‚¤‚±‚Æ‚ğéŒ¾iˆø”‚Ìself‚ÍƒEƒBƒ“ƒhƒE‚Ì‚±‚Æ‚ÅAƒEƒBƒ“ƒhƒE‚Éƒ‰ƒxƒ‹‚ª•\¦‚³‚ê‚Ü‚·j
-        label = QLabel(self)
-        
-        # ƒ‰ƒxƒ‹‚É•¶š‚ğw’è
-        label.setText("‚±‚ñ‚É‚¿‚ÍBƒ‰ƒxƒ‹‚Å‚·B")
+import streamlit as st
 
-
-if __name__ == "__main__":
-    # ŠÂ‹«•Ï”‚ÉPySide6‚ğ“o˜^
-    dirname = os.path.dirname(PySide6.__file__)
-    plugin_path = os.path.join(dirname, 'plugins', 'platforms')
-    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
-    
-    app = QApplication(sys.argv)    # PySide6‚ÌÀs
-    window = MainWindow()           # ƒ†[ƒU‚ªƒR[ƒfƒBƒ“ƒO‚µ‚½ƒNƒ‰ƒX
-    window.show()                   # PySide6‚ÌƒEƒBƒ“ƒhƒE‚ğ•\¦
-    sys.exit(app.exec())            # PySide6‚ÌI—¹
+st.title("ã¯ã˜ã‚ã¦ã®Streamlitã‚¢ãƒ—ãƒª")
+st.write("ã“ã‚“ã«ã¡ã¯ã€Streamlitã®ä¸–ç•Œã¸ã‚ˆã†ã“ãï¼")
