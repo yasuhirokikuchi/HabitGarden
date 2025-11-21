@@ -12,7 +12,6 @@ def main():
 
 
 
-
 def change_page():
     # ページ切り替えボタンコールバック
     st.session_state["page_control"]=1
