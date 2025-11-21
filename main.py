@@ -5,7 +5,7 @@ image_title = "image/title/unnamed.png"
 # テキスト(マークダウンで書けます。)
 st.write("# title")
 
-# 注釈ｗｗｗ
+# 注釈
 st.caption("注釈")
 
 # 画像
