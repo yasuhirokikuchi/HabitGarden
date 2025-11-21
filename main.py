@@ -6,6 +6,13 @@ def main():
     st.markdown("## ボタンでページを変えましょう")
     st.sidebar.button("ページ切り替えボタン", on_click=change_page)
 
+
+
+
+
+
+
+
 def change_page():
     # ページ切り替えボタンコールバック
     st.session_state["page_control"]=1
