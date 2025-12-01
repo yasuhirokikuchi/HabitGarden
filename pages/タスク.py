@@ -1,6 +1,8 @@
 import streamlit as st
 import streamlit_calendar as st_calendar
 import datetime
+import pandas as pd
+
 
 # 構造体task
 class task:
@@ -8,6 +10,11 @@ class task:
         self.name = ""
         self.min_period = 0
         self.max_period = 0
+        self.done = False
+
+# キー 'task_list' が存在しない場合にのみ空のリストで初期化
+if 'task_list' not in st.session_state:
+    st.session_state['task_list'] = []
 
 # 日数入力範囲
 min_date = datetime.date(2025, 1, 1)
@@ -32,6 +39,15 @@ st.subheader("現在のタスクリスト")
 
 # 入力内容表示
 if submitted:
-    st.write(f"タスク: {task.name}")
-    st.write(f"いつから: {task.min_period}")
-    st.write(f"いつまで: {task.max_period}")
+    # リストに項目を追加する
+    st.session_state['task_list'].append({"name": task.name, "done": False, "min": task.min_period,"max": task.max_period,})
+
+    if len(st.session_state['task_list']) > 0:
+        for i,task_list in enumerate(st.session_state['task_list']):
+            st.write(f"・**{task_list['name']}**")
+    else:
+        st.info("現在登録されているタスクはありません。")
+
+    #st.write(f"タスク: {task.name}")
+    #st.write(f"いつから: {task.min_period}")
+    #st.write(f"いつまで: {task.max_period}")
