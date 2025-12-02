@@ -27,6 +27,8 @@ with col1:
         name = st.text_input("目標の内容", placeholder="例: 英単語を20個覚える")
         min_period = st.date_input('', datetime.date(2025, 1, 1), min_value=min_date, max_value=max_date)
         max_period = st.date_input('期限', datetime.date(2025, 1, 1), min_value=min_date, max_value=max_date)
+        point = st.selectbox("タスクのポイント",options=["5","10","15"])
+
         submitted = st.form_submit_button("追加する")
 
 # フォーム送信時にリストへ追加（表示処理は追加処理と分離）
@@ -36,6 +38,7 @@ with col1:
             "done": False,
             "min": min_period,
             "max": max_period,
+            "point":point,
         })
 
 
