@@ -20,18 +20,14 @@ LEVEL_DATA = {
 # 説明
 # =========================
 def render_explanation():
-    import os
-import streamlit as st
 
-st.set_page_config(page_title="Habit Garden", page_icon=":seedling:")
+    with st.container(horizontal=True, horizontal_alignment="center"):
 
-with st.container(horizontal=True, horizontal_alignment="center"):
+        st.image("images/title/title.jpeg", width=500)
 
-    st.image("Image_20251201_111815_891.jpeg", width=500)
+        st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
 
-    st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
-
-    st.subheader("Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるアプリ")
+        st.subheader("Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるアプリ")
 
 
 # =========================
@@ -295,7 +291,7 @@ def main():
 
     with st.sidebar:
         st.header("🌱 Habit Garden")
-        page = st.radio("ページを選んでください", ["ダッシュボード", "ガーデン", "履歴"])
+        page = st.radio("ページを選んでください", ["説明","ダッシュボード", "ガーデン", "履歴"])
         st.markdown("---")
         st.subheader("➕ 新しい習慣")
         new_habit_name = st.text_input("習慣の名前", placeholder="例: 読書をする")
@@ -323,8 +319,8 @@ def main():
     st.title("🍃 Habit Garden")
     st.caption("毎日続けて、あなたの庭を育てましょう。")
 
-    if page == "はじめに":
-        render_explanation();
+    if page == "説明":
+        render_explanation()
     elif page == "ダッシュボード":
         render_dashboard(data, today_str)
     elif page == "ガーデン":
