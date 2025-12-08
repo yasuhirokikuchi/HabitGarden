@@ -17,6 +17,13 @@ LEVEL_DATA = {
 }
 
 # =========================
+# 説明
+# =========================
+def render_explanation():
+    
+
+
+# =========================
 # データの読み書き
 # =========================
 def load_data():
@@ -305,7 +312,9 @@ def main():
     st.title("🍃 Habit Garden")
     st.caption("毎日続けて、あなたの庭を育てましょう。")
 
-    if page == "ダッシュボード":
+    if page == "はじめに":
+        render_explanation();
+    elif page == "ダッシュボード":
         render_dashboard(data, today_str)
     elif page == "ガーデン":
         render_garden_page(data)
