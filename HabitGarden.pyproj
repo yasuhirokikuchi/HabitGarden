@@ -30,6 +30,9 @@
     <Compile Include="draw\dashbord.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="draw\garden.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="draw\history.py">
       <SubType>Code</SubType>
     </Compile>

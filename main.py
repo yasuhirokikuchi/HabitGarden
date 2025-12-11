@@ -14,6 +14,8 @@ from process.timedata import get_today_str,get_habit_name_map,calculate_streak
 from draw.explanation import render_explanation
 # ダッシュボード画面
 from draw.dashbord import render_dashboard
+# ガーデンの画面
+from draw.garden import render_garden_page
 # 履歴画面
 from draw.history import render_history_page
 
@@ -28,53 +30,6 @@ LEVEL_DATA = {
     300: {"label": "Tree",   "image": "images/pot/pot_4.png"},
     600: {"label": "Forest", "image": "images/pot/pot_5.png"},
 }
-
-
-
-
-
-def render_garden_page(data):
-    """詳細ガーデンビュー（画像表示に変更）"""
-    st.subheader("🌿 ガーデンビュー")
-
-    current_xp = data["xp"]
-    img_path, label, progress, next_goal = get_level_info(current_xp,LEVEL_DATA)
-
-    # 上部：ガーデン全体の状態
-    with st.container(border=True):
-        col_img, col_info = st.columns([1, 2])
-        
-        with col_img:
-            if os.path.exists(img_path):
-                # 大きめに表示
-                st.image(img_path, use_container_width=True)
-            else:
-                st.error("No Image")
-        
-        with col_info:
-            st.markdown(f"## {label}")
-            st.write(f"**総XP:** {current_xp}")
-            st.progress(progress)
-            remaining = max(0, next_goal - current_xp)
-            if remaining > 0:
-                st.caption(f"次のレベルまであと {remaining} XP")
-            else:
-                st.caption("素晴らしい！最高レベルに到達しています。")
-
-    st.markdown("### あなたの習慣たち（植物）")
-    if not data["habits"]:
-        st.info("まだ習慣がありません。サイドバーから追加してください。")
-        return
-
-    for habit in data["habits"]:
-        h_id = habit["id"]
-        with st.container(border=True):
-            st.markdown(f"**{habit['name']}**")
-            st.caption(f"カテゴリ: {habit['category']} / 作成日: {habit.get('created_at', '-')}")
-            done_count = sum(1 for ids in data["history"].values() if h_id in ids)
-            st.write(f"これまでの完了回数: {done_count} 回")
-
-
 
 # メイン処理
 def main():
@@ -124,14 +79,15 @@ def main():
     st.title("🍃 Habit Garden")
     st.caption("毎日続けて、あなたの庭を育てましょう。")
 
-    if page == "説明":                     # サイドバー選択項目
-        render_explanation()
+    # サイドバー選択項目
+    if page == "説明":   
+        render_explanation()    # 説明画面
     elif page == "ダッシュボード":
-        render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)
+        render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)  # ダッシュボード画面
     elif page == "ガーデン":
-        render_garden_page(data)
+        render_garden_page(data)         # ガーデンの画面
     else:
-        render_history_page(data)
+        render_history_page(data)        # 履歴の画面
 
 if __name__ == "__main__":
     main()
