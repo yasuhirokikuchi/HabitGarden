@@ -26,7 +26,30 @@
     <InterpreterReference Include="Global|PythonCore|3.13" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="draw\explanation.py" />
+    <Compile Include="draw\dashbord.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="draw\history.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="process\data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="process\level.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="main.py" />
+    <Compile Include="process\timedata.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="habits.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="draw\" />
+    <Folder Include="process\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

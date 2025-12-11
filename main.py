@@ -1,10 +1,23 @@
 import streamlit as st
-import pandas as pd
 import json
 import os
-from datetime import datetime, date
 
-# --- 設定 ---
+# データの読み書き
+from process.data import load_data,save_data
+# レベル、経験値の管理
+from process.level import get_level_info
+# 時間管理
+from process.timedata import get_today_str,get_habit_name_map,calculate_streak
+
+
+# アプリケーションの説明画面
+from draw.explanation import render_explanation
+# ダッシュボード画面
+from draw.dashbord import render_dashboard
+# 履歴画面
+from draw.history import render_history_page
+
+# 設定
 DATA_FILE = "habits.json"
 XP_PER_TASK = 10
 
@@ -16,204 +29,16 @@ LEVEL_DATA = {
     600: {"label": "Forest", "image": "images/pot/pot_5.png"},
 }
 
-# =========================
-# 説明
-# =========================
-def render_explanation():
-
-    with st.container(horizontal=True, horizontal_alignment="center"):
-
-        st.image("images/title/title.jpeg", width=500)
-
-        st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
-
-        st.subheader("Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるアプリ")
 
 
-# =========================
-# データの読み書き
-# =========================
-def load_data():
-    if not os.path.exists(DATA_FILE):
-        return {"habits": [], "history": {}, "xp": 0}
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
 
-def save_data(data):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-
-# =========================
-# レベル・XP ロジック
-# =========================
-def get_level_info(xp: int):
-    """
-    XPに基づいて現在のレベル情報（画像パス、ラベル）と、
-    次のレベルまでの進捗率を返す。
-    """
-    # デフォルト値（レベル0）
-    current_img = LEVEL_DATA[0]["image"]
-    current_label = LEVEL_DATA[0]["label"]
-    next_xp = 100 
-
-    # 現在のレベルを判定
-    for threshold, info in sorted(LEVEL_DATA.items()):
-        if xp >= threshold:
-            current_img = info["image"]
-            current_label = info["label"]
-        else:
-            next_xp = threshold
-            break
-    
-    # 最高レベルを超えている場合の処理（次の目標がない場合）
-    max_threshold = max(LEVEL_DATA.keys())
-    if xp >= max_threshold:
-        next_xp = max_threshold # あるいはもっと大きな値
-
-    # 進捗バーの計算
-    prev_threshold = max([k for k in LEVEL_DATA.keys() if k <= xp], default=0)
-    level_range = next_xp - prev_threshold
-    progress_in_level = xp - prev_threshold
-
-    if level_range > 0 and xp < max_threshold:
-        progress_percent = min(1.0, max(0.0, progress_in_level / level_range))
-    else:
-        progress_percent = 1.0
-
-    return current_img, current_label, progress_percent, next_xp
-
-# =========================
-# ユーティリティ
-# =========================
-def get_today_str() -> str:
-    return str(date.today())
-
-def get_habit_name_map(data):
-    return {h["id"]: h["name"] for h in data["habits"]}
-
-def calculate_streak(history: dict) -> int:
-    if not history:
-        return 0
-    streak = 0
-    check_date = date.today()
-    today_str = str(date.today())
-
-    while True:
-        d_str = str(check_date)
-        if d_str in history and len(history[d_str]) > 0:
-            streak += 1
-            check_date = check_date - pd.Timedelta(days=1)
-        else:
-            if d_str == today_str and (d_str in history and len(history[d_str]) == 0):
-                check_date = check_date - pd.Timedelta(days=1)
-                continue
-            break
-    return streak
-
-# =========================
-# ページ描画用関数
-# =========================
-def render_dashboard(data, today_str):
-    st.subheader("📊 ダッシュボード")
-
-    total_habits = len(data["habits"])
-    if today_str not in data["history"]:
-        data["history"][today_str] = []
-
-    completed_today_ids = data["history"][today_str]
-    completed_count = len(completed_today_ids)
-    progress_val = completed_count / total_habits if total_habits > 0 else 0.0
-    total_completed_all_time = sum(len(ids) for ids in data["history"].values())
-
-    # ---- 上部スタッツ ----
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.metric("今日の進捗", f"{int(progress_val * 100)}%")
-        st.progress(progress_val)
-    with c2:
-        streak = calculate_streak(data["history"])
-        st.metric("現在の連続記録", f"{streak} 日")
-    with c3:
-        st.metric("これまでの完了数", f"{total_completed_all_time} 回")
-
-    st.divider()
-
-    # ---- メイングリッド ----
-    col_list, col_garden = st.columns([2, 1], gap="large")
-
-    # 左：今日の習慣リスト
-    with col_list:
-        st.subheader("今日の習慣")
-        if not data["habits"]:
-            st.info("まだ習慣がありません。サイドバーから追加してください。")
-
-        for habit in data["habits"]:
-            h_id = habit["id"]
-            is_done = h_id in completed_today_ids
-
-            with st.container(border=True):
-                c_icon, c_text, c_btn, c_del = st.columns([0.5, 3, 1, 0.5])
-                with c_icon:
-                    st.write("✅" if is_done else "⬜")
-                with c_text:
-                    if is_done:
-                        st.markdown(f"~~**{habit['name']}**~~")
-                    else:
-                        st.markdown(f"**{habit['name']}**")
-                    st.caption(f"{habit['category']}")
-                with c_btn:
-                    if not is_done:
-                        if st.button("完了", key=f"done_{h_id}"):
-                            data["history"][today_str].append(h_id)
-                            data["xp"] += XP_PER_TASK
-                            save_data(data)
-                            st.rerun()
-                    else:
-                        st.button("済", disabled=True, key=f"done_btn_{h_id}")
-                with c_del:
-                    if st.button("🗑️", key=f"del_{h_id}"):
-                        data["habits"] = [h for h in data["habits"] if h["id"] != h_id]
-                        for d, ids in data["history"].items():
-                            data["history"][d] = [hid for hid in ids if hid != h_id]
-                        save_data(data)
-                        st.rerun()
-
-    # 右：ガーデン（画像表示に変更）
-    with col_garden:
-        st.subheader("あなたの庭")
-        current_xp = data["xp"]
-        img_path, label, progress, next_goal = get_level_info(current_xp)
-
-        with st.container(border=True):
-            # 画像を表示 (存在チェックを行う)
-            if os.path.exists(img_path):
-                st.image(img_path, caption=label, use_container_width=True)
-            else:
-                st.error(f"画像が見つかりません: {img_path}")
-                st.write(f"Level: {label}")
-
-            st.write(f"**XP:** {current_xp} / {next_goal}")
-            st.progress(progress)
-            
-            remaining = max(0, next_goal - current_xp)
-            if remaining > 0:
-                st.caption(f"次のレベルまであと {remaining} XP")
-            else:
-                st.caption("最高レベル到達！")
-
-        with st.expander("設定・リセット"):
-            if st.button("全てのデータをリセット"):
-                data.clear()
-                data.update({"habits": [], "history": {}, "xp": 0})
-                save_data(data)
-                st.rerun()
 
 def render_garden_page(data):
     """詳細ガーデンビュー（画像表示に変更）"""
     st.subheader("🌿 ガーデンビュー")
 
     current_xp = data["xp"]
-    img_path, label, progress, next_goal = get_level_info(current_xp)
+    img_path, label, progress, next_goal = get_level_info(current_xp,LEVEL_DATA)
 
     # 上部：ガーデン全体の状態
     with st.container(border=True):
@@ -249,29 +74,9 @@ def render_garden_page(data):
             done_count = sum(1 for ids in data["history"].values() if h_id in ids)
             st.write(f"これまでの完了回数: {done_count} 回")
 
-def render_history_page(data):
-    st.subheader("📜 履歴")
-    history = data["history"]
-    if not history:
-        st.info("まだ履歴がありません。")
-        return
 
-    name_map = get_habit_name_map(data)
 
-    for d_str in sorted(history.keys(), reverse=True):
-        ids = history[d_str]
-        with st.container(border=True):
-            st.markdown(f"**{d_str}** - {len(ids)} 件 完了")
-            if not ids:
-                st.caption("この日は完了した習慣はありません。")
-                continue
-            for h_id in ids:
-                name = name_map.get(h_id, f"削除された習慣 (id={h_id})")
-                st.markdown(f"- {name}")
-
-# =========================
 # メイン処理
-# =========================
 def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
     st.markdown(
@@ -284,7 +89,7 @@ def main():
     )
 
     if "data" not in st.session_state:
-        st.session_state.data = load_data()
+        st.session_state.data = load_data(DATA_FILE)
 
     data = st.session_state.data
     today_str = get_today_str()
@@ -310,7 +115,7 @@ def main():
                     "created_at": today_str,
                 }
                 data["habits"].append(new_item)
-                save_data(data)
+                save_data(data,DATA_FILE)
                 st.success(f"「{new_habit_name}」を追加しました！")
                 st.rerun()
             else:
@@ -319,10 +124,10 @@ def main():
     st.title("🍃 Habit Garden")
     st.caption("毎日続けて、あなたの庭を育てましょう。")
 
-    if page == "説明":
+    if page == "説明":                     # サイドバー選択項目
         render_explanation()
     elif page == "ダッシュボード":
-        render_dashboard(data, today_str)
+        render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)
     elif page == "ガーデン":
         render_garden_page(data)
     else:
