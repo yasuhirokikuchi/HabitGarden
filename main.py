@@ -43,11 +43,12 @@ def main():
         unsafe_allow_html=True,
     )
 
+    # 
     if "data" not in st.session_state:
         st.session_state.data = load_data(DATA_FILE)
 
     data = st.session_state.data
-    today_str = get_today_str()
+    today_str = get_today_str()    # 現在の日付
 
     with st.sidebar:
         st.header("🌱 Habit Garden")
@@ -85,7 +86,7 @@ def main():
     elif page == "ダッシュボード":
         render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)  # ダッシュボード画面
     elif page == "ガーデン":
-        render_garden_page(data)         # ガーデンの画面
+        render_garden_page(data,LEVEL_DATA)         # ガーデンの画面
     else:
         render_history_page(data)        # 履歴の画面
 
