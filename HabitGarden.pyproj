@@ -48,9 +48,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="habits.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="draw\" />
     <Folder Include="process\" />
   </ItemGroup>

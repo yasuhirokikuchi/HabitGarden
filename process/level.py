@@ -1,8 +1,6 @@
 # レベル・XP
 def get_level_info(xp: int,LEVEL_DATA):
     
-    #XPに基づいて現在のレベル情報（画像、ラベル）と次のレベルまでの進捗率を返す。
-    
     # デフォルト値（レベル0）
     current_img = LEVEL_DATA[0]["image"]
     current_label = LEVEL_DATA[0]["label"]

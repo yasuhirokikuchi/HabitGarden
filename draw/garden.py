@@ -11,7 +11,7 @@ def render_garden_page(data,LEVEL_DATA):
 
     # 上部：ガーデン全体の状態
     with st.container(border=True):
-        col_img, col_info = st.columns([1, 2])
+        col_img, col_info = st.columns([1, 2]) # 画面構成1対2
         
         with col_img:
             if os.path.exists(img_path):
@@ -30,9 +30,9 @@ def render_garden_page(data,LEVEL_DATA):
             else:
                 st.caption("素晴らしい！最高レベルに到達しています。")
 
-    st.markdown("### あなたの習慣たち（植物）")
+    st.markdown("### あなたのタスク")
     if not data["habits"]:
-        st.info("まだ習慣がありません。サイドバーから追加してください。")
+        st.info("まだタスクがありません。サイドバーから追加してください。")
         return
 
     for habit in data["habits"]:

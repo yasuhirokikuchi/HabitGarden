@@ -9,7 +9,7 @@ def get_today_str():
 def get_habit_name_map(data):
     return {h["id"]: h["name"] for h in data["habits"]}
 
-def calculate_streak(history: dict):
+def calculate_streak(history: dict): # Œp‘±“ú”‚ğ•Ô‚·
     if not history:
         return 0
     streak = 0

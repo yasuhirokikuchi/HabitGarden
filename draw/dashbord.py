@@ -6,12 +6,13 @@ from process.data import load_data,save_data
 # レベル、経験値の管理
 from process.level import get_level_info
 # 時間管理
-from process.timedata import calculate_streak
+from process.timedata import calculate_streak,get_today_str
 
 
 
 # ダッシュボード画面
 def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
+
     st.subheader("📊 ダッシュボード")
 
     total_habits = len(data["habits"])
@@ -41,29 +42,29 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
 
     # 左：今日の習慣リスト
     with col_list:
-        st.subheader("今日の習慣")
+        st.subheader("今日のやること")
         if not data["habits"]:
-            st.info("まだ習慣がありません。サイドバーから追加してください。")
+            st.info("まだタスクがありません。サイドバーから追加してください。")
 
         for habit in data["habits"]:
             h_id = habit["id"]
-            is_done = h_id in completed_today_ids
+            done = h_id in completed_today_ids
 
             with st.container(border=True):
                 c_icon, c_text, c_btn, c_del = st.columns([0.5, 3, 1, 0.5])  # ページ比率
 
                 with c_icon:  # 0.5
-                    st.write("✅" if is_done else "⬜")
+                    st.write("✅" if done else "⬜")
 
                 with c_text:  # 3
-                    if is_done:
+                    if done:
                         st.markdown(f"~~**{habit['name']}**~~")
                     else:
                         st.markdown(f"**{habit['name']}**")
                     st.caption(f"{habit['category']}")
 
                 with c_btn:   # 1
-                    if not is_done:
+                    if not done:
                         if st.button("完了", key=f"done_{h_id}"):
                             data["history"][today_str].append(h_id)
                             data["xp"] += XP_PER_TASK
@@ -103,10 +104,23 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
             else:
                 st.caption("最高レベル到達！")
 
+            # 水やり機能
+            dailytask = (data.get("daily") == get_today_str()) # 今日水をあげたか 
+
+            if dailytask:
+                st.button("水やりは終わっています",disabled=True)
+            else:
+                if st.button("今日の水やり"):
+                    data["daily"] = get_today_str()
+                    data["xp"] += XP_PER_TASK
+                    save_data(data,DATA_FILE)
+                    st.rerun
+
+
                 # リセット画面
         with st.expander("設定・リセット"):
             if st.button("全てのデータをリセット"):
                 data.clear()
-                data.update({"habits": [], "history": {}, "xp": 0})
+                data.update({"habits": [], "history": {},"daily":[], "xp": 0}) # 初期値
                 save_data(data,DATA_FILE)
                 st.rerun()

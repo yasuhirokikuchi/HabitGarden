@@ -17,9 +17,9 @@ def render_history_page(data):
         with st.container(border=True):
             st.markdown(f"**{d_str}** - {len(ids)} 件 完了")
             if not ids:
-                st.caption("この日は完了した習慣はありません。")
+                st.caption("この日は完了したタスクはありません。")
                 continue
             for h_id in ids:
-                name = name_map.get(h_id, f"削除された習慣 (id={h_id})")
+                name = name_map.get(h_id, f"削除されたタスク (id={h_id})")
                 st.markdown(f"- {name}")
 

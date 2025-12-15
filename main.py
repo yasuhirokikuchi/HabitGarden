@@ -7,7 +7,7 @@ from process.data import load_data,save_data
 # レベル、経験値の管理
 from process.level import get_level_info
 # 時間管理
-from process.timedata import get_today_str,get_habit_name_map,calculate_streak
+from process.timedata import get_today_str
 
 
 # アプリケーションの説明画面
@@ -21,6 +21,7 @@ from draw.history import render_history_page
 
 # 設定
 DATA_FILE = "habits.json"
+# タスク完了時の取得経験値量
 XP_PER_TASK = 10
 
 # 画像ファイルのパスとラベルの設定
