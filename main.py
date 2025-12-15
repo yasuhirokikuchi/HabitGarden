@@ -25,41 +25,44 @@ XP_PER_TASK = 10
 
 # 画像ファイルのパスとラベルの設定
 LEVEL_DATA = {
-    0:   {"label": "Seed",   "image": "images/pot/pot_2.png"},
-    100: {"label": "Sprout", "image": "images/pot/pot_3.png"},
-    300: {"label": "Tree",   "image": "images/pot/pot_4.png"},
-    600: {"label": "Forest", "image": "images/pot/pot_5.png"},
+    0:   {"label": "芽",   "image": "images/pot/pot_2.png"},
+    100: {"label": "栄養成長", "image": "images/pot/pot_3.png"},
+    300: {"label": "生殖成長",   "image": "images/pot/pot_4.png"},
+    600: {"label": "成熟", "image": "images/pot/pot_5.png"},
 }
 
 # メイン処理
 def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
-    st.markdown(
+    st.markdown( # border-radius ボタンの角が丸くなる
         """
         <style>
-        .stButton>button { border-radius: 20px; width: 100%; }
+        .stButton>button { border-radius: 100px; width: 100%; }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-    # 
+    # dataに値がない場合、初期化する
     if "data" not in st.session_state:
         st.session_state.data = load_data(DATA_FILE)
 
     data = st.session_state.data
     today_str = get_today_str()    # 現在の日付
 
+    # サイドバー
     with st.sidebar:
+        # サイドバーの選択項目
         st.header("🌱 Habit Garden")
         page = st.radio("ページを選んでください", ["説明","ダッシュボード", "ガーデン", "履歴"])
         st.markdown("---")
         st.subheader("➕ 新しい習慣")
         new_habit_name = st.text_input("習慣の名前", placeholder="例: 読書をする")
         new_habit_cat = st.selectbox(
-            "カテゴリ", ["Health", "Learning", "Mindfulness", "Creativity", "Other"]
+            "カテゴリ", ["健康", "勉強", "運動", "提出", "作品"]
         )
 
+        # サイドバーの習慣追加機能
         if st.button("習慣を追加"):
             if new_habit_name:
                 existing_ids = [h["id"] for h in data["habits"]]

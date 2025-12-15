@@ -23,7 +23,7 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
     progress_val = completed_count / total_habits if total_habits > 0 else 0.0
     total_completed_all_time = sum(len(ids) for ids in data["history"].values())
 
-    # ---- 上部スタッツ ----
+    # 上のページ構成
     c1, c2, c3 = st.columns(3)
     with c1:
         st.metric("今日の進捗", f"{int(progress_val * 100)}%")
@@ -36,7 +36,7 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
 
     st.divider()
 
-    # ---- メイングリッド ----
+    # 下のページ構成
     col_list, col_garden = st.columns([2, 1], gap="large")
 
     # 左：今日の習慣リスト
@@ -103,6 +103,7 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
             else:
                 st.caption("最高レベル到達！")
 
+                # リセット画面
         with st.expander("設定・リセット"):
             if st.button("全てのデータをリセット"):
                 data.clear()
