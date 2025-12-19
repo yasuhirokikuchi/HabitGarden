@@ -86,11 +86,11 @@ def main():
 
     # サイドバー選択項目
     if page == "説明":   
-        render_explanation()    # 説明画面
+        render_explanation()  # 説明画面
     elif page == "ダッシュボード":
         render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)  # ダッシュボード画面
     elif page == "ガーデン":
-        render_garden_page(data,LEVEL_DATA)         # ガーデンの画面
+        render_garden_page(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)  # ガーデンの画面
     else:
         render_history_page(data)        # 履歴の画面
 

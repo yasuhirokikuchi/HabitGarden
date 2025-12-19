@@ -105,19 +105,15 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
                 st.caption("最高レベル到達！")
 
             # 水やり機能
-            dailytask = (data.get("daily") == get_today_str()) # 今日水をあげたか 
+            dailytask = (data.get("daily") == today_str) # 今日水をあげたか 
 
             if dailytask:
-                st.button("水やりは終わっています",disabled=True)
+                st.write('水やりは完了しています！')
             else:
-                if st.button("今日の水やり"):
-                    data["daily"] = get_today_str()
-                    data["xp"] += XP_PER_TASK
-                    save_data(data,DATA_FILE)
-                    st.rerun
+                st.write('水やりは完了していません！ガーデンから水をあげてください！')
 
 
-                # リセット画面
+        # リセット画面
         with st.expander("設定・リセット"):
             if st.button("全てのデータをリセット"):
                 data.clear()

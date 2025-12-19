@@ -6,7 +6,7 @@ from datetime import datetime, date
 # データの読み書き
 
 def load_data(DATA_FILE):
-    if not os.path.exists(DATA_FILE):
+    if not os.path.exists(DATA_FILE): # dataにデータがない場合初期化
         return {"habits": [], "history": {},"daily":None, "xp": 0}
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         return json.load(f)

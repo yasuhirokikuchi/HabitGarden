@@ -2,8 +2,9 @@
 import os
 
 from process.level import get_level_info
+from process.data import save_data
 
-def render_garden_page(data,LEVEL_DATA):
+def render_garden_page(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
     st.subheader("🌿 ガーデンビュー")
 
     current_xp = data["xp"]
@@ -29,6 +30,19 @@ def render_garden_page(data,LEVEL_DATA):
                 st.caption(f"次のレベルまであと {remaining} XP")
             else:
                 st.caption("素晴らしい！最高レベルに到達しています。")
+
+            # 水やり機能
+            dailytask = (data.get("daily") == today_str) # 今日水をあげたか 
+
+            if dailytask:
+                st.button("水やりは終わっています",disabled=True)
+            else:
+                if st.button("今日の水やり"):
+                    data["daily"] = today_str
+                    data["xp"] += XP_PER_TASK
+                    save_data(data,DATA_FILE)
+                    st.rerun()
+
 
     st.markdown("### あなたのタスク")
     if not data["habits"]:

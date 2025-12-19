@@ -10,8 +10,9 @@ def get_habit_name_map(data):
     return {h["id"]: h["name"] for h in data["habits"]}
 
 def calculate_streak(history: dict): # Œp‘±“ú”‚ğ•Ô‚·
-    if not history:
+    if not history: # —š—ğ‚Éƒf[ƒ^‚ª‚È‚¢ê‡0‚ğ•Ô‚·
         return 0
+
     streak = 0
     check_date = date.today()
     today_str = str(date.today())
