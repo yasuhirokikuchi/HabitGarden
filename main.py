@@ -11,6 +11,8 @@ from draw.dashbord import render_dashboard
 from draw.garden import render_garden_page
 from draw.history import render_history_page
 
+# 設定
+# DATA_FILE 定数は不要になります
 XP_PER_TASK = 10
 LEVEL_DATA = {
     0:   {"label": "芽",   "image": "images/pot/pot_2.png"},
@@ -53,13 +55,13 @@ def login_page():
 def main_app():
     # ユーザー名を取得
     username = st.session_state["username"]
-
-    # dataに値がない場合、初期化する
+    
+    # データをロード (初回のみ)
     if "data" not in st.session_state:
-        st.session_state.data = load_data(DATA_FILE)
+        st.session_state.data = load_data(username)
 
     data = st.session_state.data
-    today_str = get_today_str()    # 現在の日付
+    today_str = get_today_str()
 
  
     
@@ -86,22 +88,41 @@ def main_app():
                     "created_at": today_str,
                 }
                 data["habits"].append(new_item)
-                save_data(data,DATA_FILE)
+                
+                # 【重要】保存時にユーザー名を渡す
+                save_data(data, username) 
+                
                 st.success(f"「{new_habit_name}」を追加しました！")
                 st.rerun()
             else:
                 st.warning("習慣の名前を入力してください。")
 
     st.title("🍃 Habit Garden")
-
+    
+    # 各ページ描画関数の呼び出し（save_dataを使っている dashboard.py なども修正が必要）
     if page == "説明":   
-        render_explanation()  # 説明画面
+        render_explanation()
     elif page == "ダッシュボード":
-        render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)  # ダッシュボード画面
+        render_dashboard(data, today_str, XP_PER_TASK, username, LEVEL_DATA) 
     elif page == "ガーデン":
-        render_garden_page(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA)  # ガーデンの画面
+        render_garden_page(data, today_str, XP_PER_TASK, username, LEVEL_DATA)
     else:
-        render_history_page(data)        # 履歴の画面
+        render_history_page(data)
+
+def main():
+    st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
+    st.markdown(
+        """<style>.stButton>button { border-radius: 100px; width: 100%; }</style>""",
+        unsafe_allow_html=True,
+    )
+
+    if "logged_in" not in st.session_state:
+        st.session_state["logged_in"] = False
+
+    if not st.session_state["logged_in"]:
+        login_page()
+    else:
+        main_app()
 
 if __name__ == "__main__":
     main()
