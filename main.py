@@ -75,7 +75,7 @@ def main_app():
         st.markdown("---")
         st.subheader("➕ 新しい習慣")
         new_habit_name = st.text_input("習慣の名前", placeholder="例: 読書をする")
-        new_habit_cat = st.selectbox("カテゴリ", ["健康", "勉強", "運動", "提出", "作品"])
+        new_habit_cat = st.selectbox("カテゴリ", ["健康", "勉強", "運動", "提出"])
 
         if st.button("習慣を追加"):
             if new_habit_name:
