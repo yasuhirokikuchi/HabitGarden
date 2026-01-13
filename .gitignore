@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# ”é–§Œ®ƒtƒ@ƒCƒ‹‚ð–³Ž‹‚·‚é
+habitgarden-484200-d4ffd5c84b37.json
+secrets.toml
+.streamlit/secrets.toml
