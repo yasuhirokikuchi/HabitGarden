@@ -30,10 +30,9 @@ def get_connection():
             st.error("認証情報が見つかりません。Secretsの設定を確認してください。")
             st.stop()
             
-    # URLは secrets.toml または コード直書き のどちらでもOK
-    # ここでは念のためコード直書き版にしておきます（一番確実なので）
+ 
     sheet_url = "https://docs.google.com/spreadsheets/d/1_jNdU5rWPi7x7BnuMUszsC3RXAcPlVjKlJPoUMSywkI/edit" 
-    # ↑先ほど成功したURLをそのまま残しておいてください
+
 
     return gc.open_by_url(sheet_url).sheet1
 # ユーザー認証（ログイン）
