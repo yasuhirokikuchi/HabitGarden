@@ -118,28 +118,22 @@ def main():
     # CSS
     hide_streamlit_style = """
         <style>
-        /* 1. ヘッダー（上のバー）を領域ごと完全に消す */
-        header {
-            visibility: hidden !important;
+        /* 1. ヘッダー（上のバー）を消す */
+        header {visibility: hidden !important;}
+        [data-testid="stHeader"] {display: none !important;}
+        
+        /* 2. フッター（下の文字）を消す */
+        footer {visibility: hidden !important;}
+        
+        /* 3. 【重要】右下の「Manage app」ボタンを消す */
+        [data-testid="stManageAppButton"] {
             display: none !important;
+            visibility: hidden !important;
         }
         
-        /* 2. Streamlitの特定のIDを持つヘッダー要素も指名して消す */
-        [data-testid="stHeader"] {
-            visibility: hidden !important;
-            display: none !important;
-        }
-        
-        /* 3. フッター（Hosted with Streamlit）を消す */
-        footer {
-            visibility: hidden !important;
-            display: none !important;
-        }
-        
-        /* 4. ヘッダーを消した分、コンテンツを上に詰める（余白調整） */
-        .block-container {
-            padding-top: 1rem !important; 
-        }
+        /* 4. その他、デコレーションバーなどを念のため消す */
+        [data-testid="stDecoration"] {display: none !important;}
+        .stDeployButton {display: none !important;}
         </style>
         """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
