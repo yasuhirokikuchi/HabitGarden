@@ -116,27 +116,55 @@ def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
 
     # CSS
-    hide_streamlit_style = """
-        <style>
-        /* 1. ヘッダー（上のバー）を消す */
-        header {visibility: hidden !important;}
-        [data-testid="stHeader"] {display: none !important;}
-        
-        /* 2. フッター（下の文字）を消す */
-        footer {visibility: hidden !important;}
-        
-        /* 3. 【重要】右下の「Manage app」ボタンを消す */
-        [data-testid="stManageAppButton"] {
-            display: none !important;
-            visibility: hidden !important;
-        }
-        
-        /* 4. その他、デコレーションバーなどを念のため消す */
-        [data-testid="stDecoration"] {display: none !important;}
-        .stDeployButton {display: none !important;}
-        </style>
-        """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    HIDE_ST_STYLE = """
+                <style>
+                div[data-testid="stToolbar"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                div[data-testid="stDecoration"] {
+                visibility: hidden;
+                height: 0%;
+                position: fixed;
+                }
+                #MainMenu {
+                visibility: hidden;
+                height: 0%;
+                }
+                header {
+                visibility: hidden;
+                height: 0%;
+                }
+                footer {
+                visibility: hidden;
+                height: 0%;
+                }
+				        .appview-container .main .block-container{
+                            padding-top: 1rem;
+                            padding-right: 3rem;
+                            padding-left: 3rem;
+                            padding-bottom: 1rem;
+                        }  
+                        .reportview-container {
+                            padding-top: 0rem;
+                            padding-right: 3rem;
+                            padding-left: 3rem;
+                            padding-bottom: 0rem;
+                        }
+                        header[data-testid="stHeader"] {
+                            z-index: -1;
+                        }
+                        div[data-testid="stToolbar"] {
+                        z-index: 100;
+                        }
+                        div[data-testid="stDecoration"] {
+                        z-index: 100;
+                        }
+                </style>
+"""
+
+    st.markdown(HIDE_ST_STYLE, unsafe_allow_html=True)
 
     st.markdown(
         """<style>.stButton>button { border-radius: 100px; width: 100%; }</style>""",
