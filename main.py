@@ -12,8 +12,8 @@ from draw.garden import render_garden_page
 from draw.history import render_history_page
 
 # 設定
-# DATA_FILE 定数は不要になります
 XP_PER_TASK = 10
+
 LEVEL_DATA = {
     0:   {"label": "芽",   "image": "images/pot/pot_2.png"},
     100: {"label": "栄養成長", "image": "images/pot/pot_3.png"},
@@ -51,6 +51,14 @@ def login_page():
                     st.error(msg)
             else:
                 st.warning("全ての項目を入力してください")
+
+    with st.container(horizontal=True, horizontal_alignment="center"):
+
+        st.image("images/title/title.jpeg", width=500)
+
+        st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
+
+        st.subheader("Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるアプリ")
 
 def main_app():
     # ユーザー名を取得

@@ -26,7 +26,6 @@
     <InterpreterReference Include="Global|PythonCore|3.13" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="draw\explanation.py" />
     <Compile Include="draw\dashbord.py">
       <SubType>Code</SubType>
     </Compile>
