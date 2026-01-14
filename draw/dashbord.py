@@ -78,6 +78,7 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
                         data["habits"] = [h for h in data["habits"] if h["id"] != h_id]
                         for d, ids in data["history"].items():
                             data["history"][d] = [hid for hid in ids if hid != h_id]
+                        data["xp"] -= XP_PER_TASK
                         save_data(data,DATA_FILE)
                         st.rerun()
 

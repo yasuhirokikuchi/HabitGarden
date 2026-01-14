@@ -69,8 +69,7 @@ def main_app():
     data = st.session_state.data
     today_str = get_today_str()
 
- 
-    
+    #　サイドバー
     with st.sidebar:
         st.header(f"🌱 {username}の庭") # ユーザー名を表示
         if st.button("ログアウト"):
@@ -105,7 +104,7 @@ def main_app():
 
     st.title("🍃 Habit Garden")
     
-    # 各ページ描画関数の呼び出し（save_dataを使っている dashboard.py なども修正が必要）
+    # 各ページ描画関数の呼び出し
     if page == "ダッシュボード":
         render_dashboard(data, today_str, XP_PER_TASK, username, LEVEL_DATA) 
     elif page == "ガーデン":
@@ -115,6 +114,8 @@ def main_app():
 
 def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
+
+    # ボタンのCSS
     st.markdown(
         """<style>.stButton>button { border-radius: 100px; width: 100%; }</style>""",
         unsafe_allow_html=True,

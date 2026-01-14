@@ -12,24 +12,14 @@ def get_connection():
     # 1. まずローカルにある鍵ファイルを探す
     json_key_file = "service_account.json"
     
-    if os.path.exists(json_key_file):
-        # ローカル環境（ファイルがある場合）
-        gc = gspread.service_account(filename=json_key_file, scopes=scopes)
-    else:
-        # 2. Cloud環境（ファイルがない場合）は st.secrets を使う
-        # secretsに設定された情報を辞書として取得
-        try:
-            creds_dict = dict(st.secrets["gcp_service_account"])
-            
-            # Cloud上でも改行コードの問題が起きないよう念のため補正
-            if "private_key" in creds_dict:
-                creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
-            
-            gc = gspread.service_account_from_dict(creds_dict, scopes=scopes)
-        except Exception as e:
-            st.error("認証情報が見つかりません。Secretsの設定を確認してください。")
-            st.stop()
-            
+
+    try:
+        creds_dict = dict(st.secrets["gcp_service_account"])
+         
+        gc = gspread.service_account_from_dict(creds_dict, scopes=scopes)
+    except Exception as e:
+        st.error("認証情報が見つかりません。Secretsの設定を確認してください。")
+        st.stop()        
  
     sheet_url = "https://docs.google.com/spreadsheets/d/1_jNdU5rWPi7x7BnuMUszsC3RXAcPlVjKlJPoUMSywkI/edit" 
 
