@@ -115,7 +115,21 @@ def main_app():
 def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
 
-    # ボタンのCSS
+    # CSS
+    hide_streamlit_style = """
+        <style>
+        /*右上のハンバーガーメニュー（3点リーダー）を消す */
+        #MainMenu {visibility: hidden;}
+        
+        /* 下のフッター（Made with Streamlit）を消す */
+        footer {visibility: hidden;}
+        
+        /* 上部のヘッダー装飾バーを消す（必要な場合） */
+        header {visibility: hidden;}
+        </style>
+        """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
     st.markdown(
         """<style>.stButton>button { border-radius: 100px; width: 100%; }</style>""",
         unsafe_allow_html=True,
