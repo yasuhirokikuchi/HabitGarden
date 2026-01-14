@@ -21,6 +21,12 @@ LEVEL_DATA = {
 }
 
 def login_page():
+    with st.container(horizontal=True, horizontal_alignment="center"):
+
+        st.image("images/title/title.jpeg", width=500)
+        st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
+        st.subheader("Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるアプリ")
+
     st.title("🌿 Habit Garden - ログイン")
     
     tab1, tab2 = st.tabs(["ログイン", "新規登録"])
@@ -51,14 +57,6 @@ def login_page():
             else:
                 st.warning("全ての項目を入力してください")
 
-    with st.container(horizontal=True, horizontal_alignment="center"):
-
-        st.image("images/title/title.jpeg", width=500)
-
-        st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
-
-        st.subheader("Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるアプリ")
-
 def main_app():
     # ユーザー名を取得
     username = st.session_state["username"]
@@ -78,7 +76,7 @@ def main_app():
             st.session_state.clear()
             st.rerun()
             
-        page = st.radio("ページを選んでください", ["説明","ダッシュボード", "ガーデン", "履歴"])
+        page = st.radio("ページを選んでください", ["ダッシュボード", "ガーデン", "履歴"])
         st.markdown("---")
         st.subheader("➕ 新しい習慣")
         new_habit_name = st.text_input("習慣の名前", placeholder="例: 読書をする")
@@ -107,9 +105,7 @@ def main_app():
     st.title("🍃 Habit Garden")
     
     # 各ページ描画関数の呼び出し（save_dataを使っている dashboard.py なども修正が必要）
-    if page == "説明":   
-        render_explanation()
-    elif page == "ダッシュボード":
+    if page == "ダッシュボード":
         render_dashboard(data, today_str, XP_PER_TASK, username, LEVEL_DATA) 
     elif page == "ガーデン":
         render_garden_page(data, today_str, XP_PER_TASK, username, LEVEL_DATA)
