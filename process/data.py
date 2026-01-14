@@ -3,11 +3,6 @@ import gspread
 import streamlit as st
 import os
 
-import json
-import gspread
-import streamlit as st
-import os
-
 def get_connection():
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
