@@ -3,28 +3,44 @@ import gspread
 import streamlit as st
 import os
 
-# スプレッドシートへの接続設定（JSONファイル直接読み込み版）
+import json
+import gspread
+import streamlit as st
+import os
+
 def get_connection():
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
     
-    # 【ここを修正】
-    # ダウンロードしたJSONファイルの名前を正確に入力してください
-    json_key_file = "habitgarden-484200-d4ffd5c84b37.json" 
+    # 1. まずローカルにある鍵ファイルを探す
+    json_key_file = "service_account.json"
     
-    # ファイルが存在するかチェック（エラー防止）
-    if not os.path.exists(json_key_file):
-        st.error(f"鍵ファイル '{json_key_file}' が見つかりません。フォルダに置かれているか、名前が合っているか確認してください。")
-        st.stop()
+    if os.path.exists(json_key_file):
+        # ローカル環境（ファイルがある場合）
+        gc = gspread.service_account(filename=json_key_file, scopes=scopes)
+    else:
+        # 2. Cloud環境（ファイルがない場合）は st.secrets を使う
+        # secretsに設定された情報を辞書として取得
+        try:
+            creds_dict = dict(st.secrets["gcp_service_account"])
+            
+            # Cloud上でも改行コードの問題が起きないよう念のため補正
+            if "private_key" in creds_dict:
+                creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+            
+            gc = gspread.service_account_from_dict(creds_dict, scopes=scopes)
+        except Exception as e:
+            st.error("認証情報が見つかりません。Secretsの設定を確認してください。")
+            st.stop()
+            
+    # URLは secrets.toml または コード直書き のどちらでもOK
+    # ここでは念のためコード直書き版にしておきます（一番確実なので）
+    sheet_url = "https://docs.google.com/spreadsheets/d/1_jNdU5rWPi7x7BnuMUszsC3RXAcPlVjKlJPoUMSywkI/edit" 
+    # ↑先ほど成功したURLをそのまま残しておいてください
 
-    gc = gspread.service_account(filename=json_key_file, scopes=scopes)
-    
-    sheet_url = "https://docs.google.com/spreadsheets/d/1_jNdU5rWPi7x7BnuMUszsC3RXAcPlVjKlJPoUMSywkI/edit"
-    
     return gc.open_by_url(sheet_url).sheet1
-
 # ユーザー認証（ログイン）
 def authenticate_user(username, password):
     sheet = get_connection()
