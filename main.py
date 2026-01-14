@@ -118,18 +118,29 @@ def main():
     # CSS
     hide_streamlit_style = """
         <style>
-        /*右上のハンバーガーメニュー（3点リーダー）を消す */
-        #MainMenu {visibility: hidden;}
+        /* 1. ヘッダー（上のバー）を領域ごと完全に消す */
+        header {
+            visibility: hidden !important;
+            display: none !important;
+        }
         
-        /* 下のフッター（Made with Streamlit）を消す */
-        footer {visibility: hidden;}
+        /* 2. Streamlitの特定のIDを持つヘッダー要素も指名して消す */
+        [data-testid="stHeader"] {
+            visibility: hidden !important;
+            display: none !important;
+        }
         
-        /* 上部のヘッダー装飾バーを消す（必要な場合） */
-        header {visibility: hidden;}
+        /* 3. フッター（Hosted with Streamlit）を消す */
+        footer {
+            visibility: hidden !important;
+            display: none !important;
+        }
+        
+        /* 4. ヘッダーを消した分、コンテンツを上に詰める（余白調整） */
+        .block-container {
+            padding-top: 1rem !important; 
+        }
         </style>
-
-        #GithubIcon {visibility: hidden;}
-
         """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
