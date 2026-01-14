@@ -6,7 +6,6 @@ from process.data import load_data, save_data, authenticate_user, register_user
 from process.level import get_level_info
 from process.timedata import get_today_str
 
-from draw.explanation import render_explanation
 from draw.dashbord import render_dashboard
 from draw.garden import render_garden_page
 from draw.history import render_history_page
