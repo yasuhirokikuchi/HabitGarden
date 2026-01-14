@@ -127,6 +127,9 @@ def main():
         /* 上部のヘッダー装飾バーを消す（必要な場合） */
         header {visibility: hidden;}
         </style>
+
+        #GithubIcon {visibility: hidden;}
+
         """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
