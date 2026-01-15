@@ -116,42 +116,7 @@ def main_app():
 def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
 
-    # CS
-    hide_streamlit_style = """
-        <style>
-        /* 1. ヘッダーの「虹色の線」だけを消す */
-        [data-testid="stDecoration"] {
-            display: none !important;
-        }
-
-        /* 2. ヘッダーの「右側のメニュー（3点リーダーなど）」だけを消す */
-        [data-testid="stToolbar"] {
-            display: none !important;
-        }
-
-        /* 3. ヘッダー自体は「表示」するが、背景色を調整（必要なら） */
-        [data-testid="stHeader"] {
-        }
-
-        /* 4. フッターを消す */
-        footer {
-            display: none !important;
-        }
-
-        /* 5. 右下のボタンを消す */
-        [data-testid="stManageAppButton"] {
-            display: none !important;
-        }
-        
-        /* 6. デプロイボタンも消す */
-        .stDeployButton {
-            display: none !important;
-        }
-        </style>
-        """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
-
+    # CSS
     st.markdown(
         """<style>.stButton>button { border-radius: 100px; width: 100%; }</style>""",
         unsafe_allow_html=True,
