@@ -8,11 +8,6 @@ def get_connection():
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
-    
-    # 1. まずローカルにある鍵ファイルを探す
-    json_key_file = "service_account.json"
-    
-
     try:
         creds_dict = dict(st.secrets["gcp_service_account"])
          
@@ -22,7 +17,6 @@ def get_connection():
         st.stop()        
  
     sheet_url = "https://docs.google.com/spreadsheets/d/1_jNdU5rWPi7x7BnuMUszsC3RXAcPlVjKlJPoUMSywkI/edit" 
-
 
     return gc.open_by_url(sheet_url).sheet1
 # ユーザー認証（ログイン）
