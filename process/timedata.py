@@ -2,7 +2,6 @@ import pandas as pd
 from datetime import datetime, date
 
 # ŠÔŠÖ˜A
-
 def get_today_str():
     return str(date.today())  # •¶š—ñŒ^‚É•ÏŠ·‚µ‚ÄŒ»İ‚Ì“ú•t‚ğ•Ô‚·
 

@@ -11,7 +11,7 @@ from process.timedata import calculate_streak,get_today_str
 
 
 # ダッシュボード画面
-def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
+def render_dashboard(data, today_str,XP_PER_TASK,username,LEVEL_DATA):
 
     st.subheader("📊 ダッシュボード")
 
@@ -68,7 +68,7 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
                         if st.button("完了", key=f"done_{h_id}"):
                             data["history"][today_str].append(h_id)
                             data["xp"] += XP_PER_TASK
-                            save_data(data,DATA_FILE)
+                            save_data(data,username)
                             st.rerun()
                     else:
                         st.button("済", disabled=True, key=f"done_btn_{h_id}")
@@ -79,7 +79,7 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
                         for d, ids in data["history"].items():
                             data["history"][d] = [hid for hid in ids if hid != h_id]
                         data["xp"] -= XP_PER_TASK
-                        save_data(data,DATA_FILE)
+                        save_data(data,username)
                         st.rerun()
 
     # 右：ガーデン
@@ -119,5 +119,5 @@ def render_dashboard(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
             if st.button("全てのデータをリセット"):
                 data.clear()
                 data.update({"habits": [], "history": {},"daily":[], "xp": 0}) # 初期値
-                save_data(data,DATA_FILE)
+                save_data(data,username)
                 st.rerun()

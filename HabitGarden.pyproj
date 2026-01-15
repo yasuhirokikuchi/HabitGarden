@@ -13,6 +13,7 @@
     <Name>HabitGarden</Name>
     <RootNamespace>HabitGarden</RootNamespace>
     <InterpreterId>Global|PythonCore|3.13</InterpreterId>
+    <SuppressPackageInstallationPrompt>True</SuppressPackageInstallationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

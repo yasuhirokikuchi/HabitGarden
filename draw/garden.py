@@ -4,7 +4,7 @@ import os
 from process.level import get_level_info
 from process.data import save_data
 
-def render_garden_page(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
+def render_garden_page(data, today_str,XP_PER_TASK,username,LEVEL_DATA):
     st.subheader("🌿 ガーデンビュー")
 
     current_xp = data["xp"]
@@ -40,7 +40,7 @@ def render_garden_page(data, today_str,XP_PER_TASK,DATA_FILE,LEVEL_DATA):
                 if st.button("今日の水やり"):
                     data["daily"] = today_str
                     data["xp"] += XP_PER_TASK
-                    save_data(data,DATA_FILE)
+                    save_data(data,username)
                     st.rerun()
 
 

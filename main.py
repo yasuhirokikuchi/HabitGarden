@@ -27,6 +27,8 @@ def login_page():
         st.markdown('<h1 style="text-align:center;">🌿ようこそ <span style="color:green;">Habit Garden</span> へ</h1>',unsafe_allow_html=True)
         st.write("### Habit Gardenでは決めた目標を植物の成長度合いで表し、目標の達成が一目でわかるようになるwebアプリ")
 
+    st.divider()
+
     st.title("🌿 Habit Garden - ログイン")
     
     tab1, tab2 = st.tabs(["ログイン", "新規登録"])
@@ -93,7 +95,7 @@ def main_app():
                 }
                 data["habits"].append(new_item)
                 
-                # 【重要】保存時にユーザー名を渡す
+                # 保存時にユーザー名を渡す
                 save_data(data, username) 
                 
                 st.success(f"「{new_habit_name}」を追加しました！")
@@ -115,56 +117,6 @@ def main():
     st.set_page_config(page_title="Habit Garden", page_icon="🍃", layout="wide")
 
     # CSS
-    HIDE_ST_STYLE = """
-                <style>
-                div[data-testid="stToolbar"] {
-                visibility: hidden;
-                height: 0%;
-                position: fixed;
-                }
-                div[data-testid="stDecoration"] {
-                visibility: hidden;
-                height: 0%;
-                position: fixed;
-                }
-                #MainMenu {
-                visibility: hidden;
-                height: 0%;
-                }
-                header {
-                visibility: hidden;
-                height: 0%;
-                }
-                footer {
-                visibility: hidden;
-                height: 0%;
-                }
-				        .appview-container .main .block-container{
-                            padding-top: 1rem;
-                            padding-right: 3rem;
-                            padding-left: 3rem;
-                            padding-bottom: 1rem;
-                        }  
-                        .reportview-container {
-                            padding-top: 0rem;
-                            padding-right: 3rem;
-                            padding-left: 3rem;
-                            padding-bottom: 0rem;
-                        }
-                        header[data-testid="stHeader"] {
-                            z-index: -1;
-                        }
-                        div[data-testid="stToolbar"] {
-                        z-index: 100;
-                        }
-                        div[data-testid="stDecoration"] {
-                        z-index: 100;
-                        }
-                </style>
-"""
-
-    st.markdown(HIDE_ST_STYLE, unsafe_allow_html=True)
-
     st.markdown(
         """<style>.stButton>button { border-radius: 100px; width: 100%; }</style>""",
         unsafe_allow_html=True,
