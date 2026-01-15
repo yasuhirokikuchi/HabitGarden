@@ -19,6 +19,7 @@ def get_connection():
     sheet_url = "https://docs.google.com/spreadsheets/d/1_jNdU5rWPi7x7BnuMUszsC3RXAcPlVjKlJPoUMSywkI/edit" 
 
     return gc.open_by_url(sheet_url).sheet1
+
 # ユーザー認証（ログイン）
 def authenticate_user(username, password):
     sheet = get_connection()
