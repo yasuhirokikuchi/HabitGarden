@@ -1,7 +1,6 @@
 import streamlit as st
 import time
 
-# 変更したdata.pyからインポート
 from process.data import load_data, save_data, authenticate_user, register_user
 from process.level import get_level_info
 from process.timedata import get_today_str
