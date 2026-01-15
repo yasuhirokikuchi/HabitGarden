@@ -119,15 +119,38 @@ def main():
     # CSS
     hide_streamlit_style = """
         <style>
-        /* 右上のハンバーガーメニュー（3点リーダー） */
-        #MainMenu {visibility: hidden;}
-        
-        /* 下のフッター（Hosted with Streamlit / Made with Streamlit） */
-        footer {visibility: hidden;}
-        
-        /* ヘッダー（Gitアイコン、デプロイボタン、装飾バー）を消す */
-        header {visibility: hidden;}
+        /* ヘッダー全体は消さずに、背景だけ透明にする */
+        [data-testid="stHeader"] {
+            background-color: transparent !important;
+        }
 
+        /* ヘッダー上部の虹色の線を消す */
+        [data-testid="stDecoration"] {
+            display: none !important;
+        }
+
+        /* 右上のツールバー（Githubアイコンや3点リーダー）だけを消す */
+        [data-testid="stToolbar"] {
+            visibility: hidden !important;
+            display: none !important;
+        }
+
+        /* フッター（Hosted with Streamlit）を消す */
+        footer {
+            visibility: hidden !important;
+            display: none !important;
+        }
+
+        /* 右下の「Manage app」ボタンを消す */
+        [data-testid="stManageAppButton"] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        
+        /* デプロイボタンも消す */
+        .stDeployButton {
+            display: none !important;
+        }
         </style>
         """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
